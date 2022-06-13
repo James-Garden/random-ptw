@@ -105,7 +105,7 @@ class App(Tk):
             img_data = img_response.read()
             image = Image.open(BytesIO(img_data))
         except (HTTPError, AttributeError):
-            image = Image.open('image404.png')
+            image = Image.open('./image404.png')
         element = ImageTk.PhotoImage(image)
         return element
 
