@@ -24,11 +24,21 @@ class ListEntry:
             self.start_date = None
             self.finish_date = None
         else:
-            self.start_date = datetime.strptime(start_date_string, "%m-%d-%y")
-            if finish_date_string is None:
-                self.finish_date = None
-            else:
-                self.finish_date = datetime.strptime(finish_date_string, "%m-%d-%y")
+            # For some reason dates can be returned in either format.
+            # Why.
+            # Thanks America!
+            try:
+                self.start_date = datetime.strptime(start_date_string, "%m-%d-%y")
+                if finish_date_string is None:
+                    self.finish_date = None
+                else:
+                    self.finish_date = datetime.strptime(finish_date_string, "%m-%d-%y")
+            except ValueError:
+                self.start_date = datetime.strptime(start_date_string, "%d-%m-%y")
+                if finish_date_string is None:
+                    self.finish_date = None
+                else:
+                    self.finish_date = datetime.strptime(finish_date_string, "%d-%m-%y")
 
     def __repr__(self):
         return f"<{self.__class__.__name__}>: '{self.anime_title}'"
